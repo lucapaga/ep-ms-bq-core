@@ -11,13 +11,13 @@ const router = Router();
 const accountDao = new AccountDao();
 
 /******************************************************************************
- *                      Get All Users - "GET /epi/accounts/list"
+ *  Get All Users - "GET /epi/accounts/list"
  ******************************************************************************/
 
 router.get('/list', async (req: Request, res: Response) => {
     try {
         const accounts = await accountDao.getAll();
-        return res.status(OK).json({accounts});
+        return res.status(OK).json(accounts);
     } catch (err) {
         logger.error(err.message, err);
         return res.status(BAD_REQUEST).json({
@@ -28,7 +28,7 @@ router.get('/list', async (req: Request, res: Response) => {
 
 
 /******************************************************************************
- *                    Get Account's Transactions - "GET /epi/accounts/:id/transactions"
+ *  Get Account's Transactions - "GET /epi/accounts/:id/transactions"
  ******************************************************************************/
 
 router.get('/:id/transactions', async (req: Request, res: Response) => {
@@ -46,7 +46,7 @@ router.get('/:id/transactions', async (req: Request, res: Response) => {
 
 
 /******************************************************************************
- *                       Add Tx to Account - "POST /epi/accounts/:id/transactions"
+ *  Add Tx to Account - "POST /epi/accounts/:id/transactions"
  ******************************************************************************/
 
 router.post('/:id/transactions', async (req: Request, res: Response) => {

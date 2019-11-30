@@ -4,7 +4,7 @@ let accountDaoPath = './Account/AccountDao';
 
 if (usingMockDb === 'true') {
     userDaoPath += '.mock';
-    accountDaoPath += '.mock';
+    //accountDaoPath += '.mock';
 }
 
 // tslint:disable:no-var-requires
