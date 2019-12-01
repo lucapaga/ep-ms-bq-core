@@ -1,14 +1,16 @@
 
-import { AccountDao } from '@daos';
+import { AccountDao, TransactionDao } from '@daos';
 import { logger } from '@shared';
 import { Request, Response, Router, Express } from 'express';
 import { BAD_REQUEST, CREATED, OK } from 'http-status-codes';
 import { paramMissingError } from '@shared';
 import { ParamsDictionary } from 'express-serve-static-core';
+import { Account } from '@entities';
 
 // Init shared
 const router = Router();
 const accountDao = new AccountDao();
+const transactionDao = new TransactionDao()
 
 /******************************************************************************
  *  Get All Users - "GET /epi/accounts/list"
@@ -33,9 +35,11 @@ router.get('/list', async (req: Request, res: Response) => {
 
 router.get('/:id/transactions', async (req: Request, res: Response) => {
     try {
-        const { id } = req.params as ParamsDictionary;
+        console.log("Request Parameters: ", req.params);
+        const transactions = await transactionDao.getAll(new Account("", req.params['id'], 0));
+        //const { id } = req.params as ParamsDictionary;
         //await userDao.delete(Number(id));
-        return res.status(OK).json({});
+        return res.status(OK).json(transactions);
     } catch (err) {
         logger.error(err.message, err);
         return res.status(BAD_REQUEST).json({
